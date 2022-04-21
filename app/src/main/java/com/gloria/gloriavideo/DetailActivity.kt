@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.VideoView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.gloria.common.anim.AnimationUtils
 
 class DetailActivity : AppCompatActivity() {
 
@@ -17,6 +18,7 @@ class DetailActivity : AppCompatActivity() {
     private var videoUrl = ""
     private var videoView: VideoView? = null
     private var playPauseLayout: ConstraintLayout? = null
+    private var likeView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,10 @@ class DetailActivity : AppCompatActivity() {
     private fun initView() {
         videoView = findViewById(R.id.video_view)
         playPauseLayout = findViewById(R.id.view_play_pause)
+        likeView = findViewById(R.id.view_like)
+
         playPauseLayout?.visibility = View.INVISIBLE
+        likeView?.visibility = View.INVISIBLE
         playVideo()
     }
 
@@ -58,6 +63,12 @@ class DetailActivity : AppCompatActivity() {
                 videoView?.start()
                 playPauseLayout?.visibility = View.INVISIBLE
             }
+        }
+        videoView?.setOnLongClickListener {
+            likeView?.visibility = View.VISIBLE
+            likeView?.bringToFront()
+            AnimationUtils.showAndHiddenAnimation(likeView!!, AnimationUtils.AnimationState.STATE_HIDDEN, 2000)
+            return@setOnLongClickListener true
         }
     }
 }
