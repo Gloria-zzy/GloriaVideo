@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import com.gloria.common.card.CardLayout
 import com.gloria.common.network.VideoApi
 import com.gloria.common.network.VideoBean
@@ -23,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide();// 隐藏ActionBar
         setContentView(R.layout.activity_main)
 
         initView()
