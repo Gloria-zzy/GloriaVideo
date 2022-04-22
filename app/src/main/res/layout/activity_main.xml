@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/btn_sort_default"
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:text="综合排序"
@@ -27,6 +28,7 @@
             android:layout_marginRight="15dp"/>
 
         <Button
+            android:id="@+id/btn_sort_like"
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:text="最多点赞"
