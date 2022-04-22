@@ -1,5 +1,7 @@
 package com.gloria.gloriavideo
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,9 +21,11 @@ class DetailActivity : AppCompatActivity() {
     private var videoView: VideoView? = null
     private var playPauseLayout: ConstraintLayout? = null
     private var likeView: View? = null
+    private var likeCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide();// 隐藏ActionBar
         setContentView(R.layout.activity_detail)
 
         videoUrl = intent.getStringExtra("url").toString()
@@ -65,9 +69,14 @@ class DetailActivity : AppCompatActivity() {
             }
         }
         videoView?.setOnLongClickListener {
+            likeCount++
             likeView?.visibility = View.VISIBLE
             likeView?.bringToFront()
             AnimationUtils.showAndHiddenAnimation(likeView!!, AnimationUtils.AnimationState.STATE_HIDDEN, 2000)
+            val intent = Intent()
+            intent.putExtra("likecount", likeCount.toString())
+            intent.putExtra("url", videoUrl)
+            setResult(Activity.RESULT_OK, intent)
             return@setOnLongClickListener true
         }
     }

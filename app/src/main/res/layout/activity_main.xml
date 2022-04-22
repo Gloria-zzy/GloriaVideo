@@ -6,13 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btn_sort_default"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:text="综合排序"
+            android:gravity="center"
+            android:background="@drawable/btn_bg_white"
+            android:alpha="0.6"
+            android:layout_marginRight="15dp"/>
+
+        <Button
+            android:id="@+id/btn_sort_like"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:text="最多点赞"
+            android:gravity="center"
+            android:background="@drawable/btn_bg_white"
+            android:alpha="0.6" />
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/ll_top">
 
         <LinearLayout
             android:id="@+id/ll_show_cards"
