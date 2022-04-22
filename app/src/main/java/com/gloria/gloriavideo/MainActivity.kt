@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private var scope: CoroutineScope? = null
     private var videoList: List<VideoBean>? = null
+    private var sortByLike = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,21 @@ class MainActivity : AppCompatActivity() {
         scope?.cancel()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val url = data?.getStringExtra("url")
+        val likecount = data?.getStringExtra("likecount")
+        for (item in videoList!!) {
+            if (item.feedurl == url) {
+                if (likecount != null) {
+                    item.addLikeCount(likecount)
+                }
+                break
+            }
+        }
+        setVideoData()
+    }
+
     private fun initView() {
         linearLayout = findViewById(R.id.ll_show_cards)
         btnSortDefault = findViewById(R.id.btn_sort_default)
@@ -49,10 +65,12 @@ class MainActivity : AppCompatActivity() {
     private fun initAction() {
         getVideoData()
         btnSortDefault?.setOnClickListener {
-            scope?.launch { setVideoData(false) }
+            sortByLike = false
+            scope?.launch { setVideoData() }
         }
         btnSortLike?.setOnClickListener {
-            scope?.launch { setVideoData(true) }
+            sortByLike = true
+            scope?.launch { setVideoData() }
         }
     }
 
@@ -61,7 +79,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 videoList = VideoApi.createVideoApi().requestData()
                 Log.d(TAG, videoList.toString())
-                setVideoData(false)
+                sortByLike = false
+                setVideoData()
             }catch (e: Exception){
                 e.printStackTrace()
                 Log.e(TAG, e.toString())
@@ -69,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setVideoData(sortByLike: Boolean) {
+    private fun setVideoData() {
         var showVideoList = ArrayList<VideoBean>()
         if (sortByLike){
             for (item in videoList!!){
@@ -98,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             card.setOnClickListener {
                 val intent = Intent(applicationContext, DetailActivity::class.java)
                 intent.putExtra("url", item.feedurl)
-                startActivity(intent)
+                startActivityForResult(intent, 1)
             }
         }
     }

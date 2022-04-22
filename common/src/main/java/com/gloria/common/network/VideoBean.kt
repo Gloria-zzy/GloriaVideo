@@ -11,8 +11,9 @@ data class VideoBean(
         @SerializedName("avatar") val avatar: String,
         @SerializedName("thumbnails") val thumbnails: String
 ) {
-    fun setLikeInt(like: Int) {
-        likecount = like.toString()
+    fun addLikeCount(like: String) {
+        val newLike = getLikeInt() + Integer.parseInt(like)
+        likecount = newLike.toString()
     }
 
     fun getLikeInt(): Int {
